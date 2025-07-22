@@ -1,21 +1,21 @@
-import Header from '../components/landingPage/Header';
+import Header from '../components/shared/Header';
 import Hero from '../components/landingPage/Hero';
 import AboutUs from '../components/landingPage/AboutUs';
 import HowItWorks from '../components/landingPage/HowItWorks';
 import ContactUs from '../components/landingPage/ContactUs';
 import CTA from '../components/landingPage/CTA';
-import Footer from '../components/landingPage/Footer';
+import Footer from '../components/shared/Footer';
 import '../styles/LandingPage.css';
 
-const LandingPage = () => {
+const LandingPage = ({ onNavigate }) => {
   return (
     <div className="landing-page">
-      <Header />
+      <Header onNavigate={onNavigate} />
       <Hero />
       <AboutUs />
       <HowItWorks />
       <ContactUs />
-      <CTA />
+      <CTA onNavigate={onNavigate} />
       <Footer />
     </div>
   );

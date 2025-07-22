@@ -1,6 +1,6 @@
 'use client';
 
-const Footer = () => {
+const Footer = ({ onNavigate }) => {
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {

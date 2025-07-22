@@ -1,6 +1,6 @@
 'use client';
 
-const Hero = () => {
+const Hero = ({ onNavigate }) => {
   return (
     <section id="home" className="hero">
       <div className="container">
@@ -11,16 +11,18 @@ const Hero = () => {
               Welcome to MediTrust, where every donation is tracked, verified
               and makes a real difference in someone's life.
             </p>
-            <button
-              className="btn-learn-more"
-              onClick={() =>
-                document
-                  .getElementById('how-it-works')
-                  .scrollIntoView({ behavior: 'smooth' })
-              }
-            >
-              Learn More
-            </button>
+            <div className="hero-buttons">
+              <button
+                className="btn-learn-more"
+                onClick={() =>
+                  document
+                    .getElementById('how-it-works')
+                    .scrollIntoView({ behavior: 'smooth' })
+                }
+              >
+                Learn More
+              </button>
+            </div>
           </div>
           <div className="hero-illustration">
             <div className="illustration-container">

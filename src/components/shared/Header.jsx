@@ -1,6 +1,6 @@
 'use client';
 
-const Header = () => {
+const Header = ({ onNavigate }) => {
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -55,7 +55,32 @@ const Header = () => {
         </nav>
         <div className="auth-buttons">
           <button className="btn-signin">Sign In</button>
-          <button className="btn-signup">Sign Up</button>
+          <button
+            className="btn-signup"
+            onClick={(e) => {
+              e.preventDefault();
+
+              // 1️⃣ Prefer the callback passed down from App.jsx
+              if (typeof onNavigate === 'function') {
+                onNavigate('role-selection');
+                return;
+              }
+
+              // 2️⃣ Fallback – check if the global helper set by App.jsx exists
+              if (
+                typeof window !== 'undefined' &&
+                typeof window.setCurrentPage === 'function'
+              ) {
+                window.setCurrentPage('role-selection');
+                return;
+              }
+
+              // 3️⃣ Last-resort fallback – use hash navigation
+              window.location.hash = '#role-selection';
+            }}
+          >
+            Sign Up
+          </button>
         </div>
       </div>
     </header>

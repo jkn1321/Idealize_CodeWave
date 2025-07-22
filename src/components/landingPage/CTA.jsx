@@ -1,4 +1,6 @@
-const CTA = () => {
+'use client';
+
+const CTA = ({ onNavigate }) => {
   return (
     <section className="cta-section">
       <div className="container">
@@ -9,7 +11,16 @@ const CTA = () => {
             trusted medical donations. Your contribution can change someone's
             life today.
           </p>
-          <button className="btn-cta">Create an Account</button>
+          <button
+            className="btn-cta"
+            onClick={() => {
+              if (onNavigate) {
+                onNavigate('role-selection');
+              }
+            }}
+          >
+            Start Your Journey
+          </button>
         </div>
       </div>
     </section>
