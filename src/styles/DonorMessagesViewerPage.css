@@ -1,0 +1,37 @@
+.donor-messages-viewer {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  background-color: #F1F5F9;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #FFFFFF;
+  border: 1px solid #D9D9D9;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.message-thread {
+  flex: 1;
+  background-color: #FFFFFF;
+  border: 1px solid #D9D9D9;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.message {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.message.patient {
+  background-color: #F1F5F9;
+}
+
+.message.donor {
+  background-color: #3B82F6;
+  color: #FFFFFF;
+}

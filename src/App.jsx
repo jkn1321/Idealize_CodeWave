@@ -11,6 +11,25 @@ import DonerSignUpPage from './pages/donor/SignUpPage';
 import PatientDashboard from './pages/patient/dashboard';
 import DoctorDashboard from './pages/Doctor/DoctorDashboard';
 import DonorDashboard from './pages/donor/DonorDashboard';
+import DoctorLoginRegistrationPage from './pages/Doctor/DoctorLoginRegistrationPage';
+import DoctorDashboardPage from './pages/Doctor/DoctorDashboardPage';
+import DoctorCaseReviewPage from './pages/Doctor/DoctorCaseReviewPage';
+import DoctorRecognitionPage from './pages/Doctor/DoctorRecognitionPage';
+import DoctorProfilePage from './pages/Doctor/DoctorProfilePage';
+import DoctorNotificationsPage from './pages/Doctor/DoctorNotificationsPage';
+import DonorLoginSignupPage from './pages/Donor/DonorLoginSignupPage';
+import VerifiedCaseBrowserPage from './pages/Donor/VerifiedCaseBrowserPage';
+import CaseDetailsDonatePage from './pages/Donor/CaseDetailsDonatePage';
+import DonationHistoryPage from './pages/Donor/DonationHistoryPage';
+import ImpactReportPage from './pages/Donor/ImpactReportPage';
+import DonorProfileSettingsPage from './pages/Donor/DonorProfileSettingsPage';
+import AdminDashboardPage from './pages/Admin/AdminDashboardPage';
+import UserManagementPage from './pages/Admin/UserManagementPage';
+import FlaggedCasesPage from './pages/Admin/FlaggedCasesPage';
+import DonorMessagesViewerPage from './pages/Admin/DonorMessagesViewerPage';
+import ChannelRequestsViewerPage from './pages/Admin/ChannelRequestsViewerPage';
+import AnalyticsPage from './pages/Admin/AnalyticsPage';
+import SystemSettingsPage from './pages/Admin/SystemSettingsPage';
 
 function App() {
   return (
@@ -29,6 +48,26 @@ function App() {
             <Route path="/doctor/dashboard" element={<DoctorDashboard />} />
             <Route path="/donor/dashboard" element={<DonorDashboard />} />
             <Route path="/coming-soon/:role" element={<ComingSoon />} />
+            <Route path="/doctor/login" element={<DoctorLoginRegistrationPage />} />
+            <Route path="/doctor/dashboard" element={<DoctorDashboardPage />} />
+            <Route path="/doctor/case-review" element={<DoctorCaseReviewPage />} />
+            <Route path="/doctor/recognition" element={<DoctorRecognitionPage />} />
+            <Route path="/doctor/profile" element={<DoctorProfilePage />} />
+            <Route path="/doctor/notifications" element={<DoctorNotificationsPage />} />
+            <Route path="/donor/login" element={<DonorLoginSignupPage />} />
+            <Route path="/donor/cases" element={<VerifiedCaseBrowserPage />} />
+            <Route path="/donor/case-details" element={<CaseDetailsDonatePage />} />
+            <Route path="/donor/history" element={<DonationHistoryPage />} />
+            <Route path="/donor/impact-report" element={<ImpactReportPage />} />
+            <Route path="/donor/profile" element={<DonorProfileSettingsPage />} />
+            {/* Admin Routes */}
+            <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
+            <Route path="/admin/users" element={<UserManagementPage />} />
+            <Route path="/admin/flagged-cases" element={<FlaggedCasesPage />} />
+            <Route path="/admin/donor-messages" element={<DonorMessagesViewerPage />} />
+            <Route path="/admin/channel-requests" element={<ChannelRequestsViewerPage />} />
+            <Route path="/admin/analytics" element={<AnalyticsPage />} />
+            <Route path="/admin/settings" element={<SystemSettingsPage />} />
             <Route path="*" element={<LandingPage />} />
           </Routes>
         </div>
