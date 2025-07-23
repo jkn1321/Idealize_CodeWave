@@ -9,3 +9,5 @@ const Footer = () => {
 };
 
 export default Footer;
+
+//meka use kre na shared eke eka thma use wenne

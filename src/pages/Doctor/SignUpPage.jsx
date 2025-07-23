@@ -1,10 +1,10 @@
 import React from 'react';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
-import BackgroundLayout from '../../components/BackgroundLayout';
-import MainContent from '../../components/MainContent';
+import Header from '../../components/shared/Header';
+import Footer from '../../components/shared/Footer';
+import BackgroundLayout from '../../components/Doctor/BackgroundLayout';
+import MainContent from '../../components/Doctor/MainContent';
 
-function SignUp() {
+function DoctorSignUpPage() {
   return (
     <BackgroundLayout>
       <Header />
@@ -14,4 +14,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default DoctorSignUpPage;
