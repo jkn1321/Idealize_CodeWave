@@ -7,6 +7,7 @@ import {
   LogOut,
   Settings,
   ChevronDown,
+  Home,
 } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
@@ -169,6 +170,25 @@ const Header = () => {
                     </div>
 
                     <div className="py-1">
+                      <button
+                        onClick={() => {
+                          // Navigate to appropriate dashboard based on user type
+                          const dashboardRoute =
+                            user.userType === 'patient'
+                              ? '/patient/dashboard'
+                              : user.userType === 'doctor'
+                              ? '/doctor/dashboard'
+                              : user.userType === 'donor'
+                              ? '/donor/dashboard'
+                              : '/profile';
+                          navigate(dashboardRoute);
+                          setIsProfileMenuOpen(false);
+                        }}
+                        className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                      >
+                        <Home className="h-4 w-4 mr-3" />
+                        Dashboard
+                      </button>
                       <button
                         onClick={() => {
                           navigate('/profile');

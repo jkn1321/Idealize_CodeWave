@@ -9,6 +9,7 @@ import {
   Stethoscope,
   ArrowLeft,
   Shield,
+  Heart,
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import Header from '../components/shared/Header';
@@ -42,7 +43,21 @@ const LoginPage = () => {
 
       if (result.success) {
         setFormData({ email: '', password: '', userType: 'patient' });
-        navigate('/profile'); // Navigate to profile or dashboard
+
+        // Redirect based on user role
+        switch (formData.userType) {
+          case 'patient':
+            navigate('/patient/dashboard');
+            break;
+          case 'doctor':
+            navigate('/doctor/dashboard');
+            break;
+          case 'donor':
+            navigate('/donor/dashboard');
+            break;
+          default:
+            navigate('/profile');
+        }
       } else {
         setError(result.error || 'Login failed');
       }
@@ -89,7 +104,7 @@ const LoginPage = () => {
               <label className="block text-sm font-medium text-gray-700 mb-3">
                 Account Type
               </label>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-3 gap-3">
                 <button
                   type="button"
                   onClick={() =>
@@ -117,6 +132,20 @@ const LoginPage = () => {
                 >
                   <Stethoscope className="h-5 w-5 mr-2" />
                   Doctor
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setFormData((prev) => ({ ...prev, userType: 'donor' }))
+                  }
+                  className={`flex items-center justify-center p-3 rounded-lg border-2 transition-all duration-200 ${
+                    formData.userType === 'donor'
+                      ? 'border-primary-500 bg-primary-50 text-primary-700 shadow-md'
+                      : 'border-gray-200 hover:border-gray-300 text-gray-600 hover:shadow-sm'
+                  }`}
+                >
+                  <Heart className="h-5 w-5 mr-2" />
+                  Donor
                 </button>
               </div>
             </div>
@@ -200,7 +229,7 @@ const LoginPage = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-primary-600 hover:bg-primary-700 disabled:bg-primary-400 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl disabled:cursor-not-allowed transform hover:-translate-y-0.5"
+                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl disabled:cursor-not-allowed transform hover:-translate-y-0.5"
               >
                 {isLoading ? (
                   <div className="flex items-center justify-center">
@@ -275,7 +304,7 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

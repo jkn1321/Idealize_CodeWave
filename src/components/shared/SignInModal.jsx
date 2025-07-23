@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { X, Mail, Lock, Eye, EyeOff, User, Stethoscope } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -13,6 +14,7 @@ const SignInModal = ({ isOpen, onClose }) => {
   const [error, setError] = useState('');
 
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,6 +31,21 @@ const SignInModal = ({ isOpen, onClose }) => {
       if (result.success) {
         onClose();
         setFormData({ email: '', password: '', userType: 'patient' });
+
+        // Redirect based on user role
+        switch (formData.userType) {
+          case 'patient':
+            navigate('/patient/dashboard');
+            break;
+          case 'doctor':
+            navigate('/doctor/dashboard');
+            break;
+          case 'donor':
+            navigate('/donor/dashboard');
+            break;
+          default:
+            navigate('/profile');
+        }
       } else {
         setError(result.error || 'Login failed');
       }

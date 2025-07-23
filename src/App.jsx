@@ -8,6 +8,9 @@ import ComingSoon from './components/ComingSoon';
 import DoctorSignUpPage from './pages/Doctor/SignUpPage';
 import ProfilePage from './pages/ProfilePage';
 import DonerSignUpPage from './pages/donor/SignUpPage';
+import PatientDashboard from './pages/patient/dashboard';
+import DoctorDashboard from './pages/Doctor/DoctorDashboard';
+import DonorDashboard from './pages/donor/DonorDashboard';
 
 function App() {
   return (
@@ -22,6 +25,9 @@ function App() {
             <Route path="/doctor/signup" element={<DoctorSignUpPage />} />
             <Route path="/donor/signup" element={<DonerSignUpPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/patient/dashboard" element={<PatientDashboard />} />
+            <Route path="/doctor/dashboard" element={<DoctorDashboard />} />
+            <Route path="/donor/dashboard" element={<DonorDashboard />} />
             <Route path="/coming-soon/:role" element={<ComingSoon />} />
             <Route path="*" element={<LandingPage />} />
           </Routes>

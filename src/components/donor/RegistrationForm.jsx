@@ -79,8 +79,8 @@ const RegistrationForm = () => {
       const result = await register(formData, 'donor');
 
       if (result.success) {
-        // Navigate to a success page or dashboard
-        navigate('/', {
+        // Navigate to donor dashboard
+        navigate('/login', {
           state: {
             message: 'Registration successful! Thank you for becoming a donor.',
           },

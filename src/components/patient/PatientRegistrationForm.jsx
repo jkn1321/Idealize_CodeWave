@@ -68,7 +68,7 @@ const PatientRegistrationForm = () => {
       const result = await register(registrationData, 'patient');
 
       if (result.success) {
-        navigate('/', {
+        navigate('/login', {
           state: {
             message: 'Registration successful! Welcome to MediTrust.',
           },
