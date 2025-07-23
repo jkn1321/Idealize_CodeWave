@@ -4,10 +4,11 @@ import {
   User,
   Mail,
   Phone,
-  Stethoscope,
+  Heart,
   FileText,
-  Building,
+  MapPin,
   Lock,
+  Calendar,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -17,18 +18,33 @@ const RegistrationForm = () => {
     fullName: '',
     email: '',
     phone: '',
-    specialization: '',
-    licenseNumber: '',
-    hospital: '',
+    bloodType: '',
+    organsToDonate: '',
+    address: '',
+    age: '',
     password: '',
-    credentials: null,
-    agreeToShare: false,
+    medicalHistory: null,
+    agreeToTerms: false,
+    emergencyContact: '',
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
   const { register } = useAuth();
   const navigate = useNavigate();
+
+  const bloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+  const organOptions = [
+    'Heart',
+    'Kidneys',
+    'Liver',
+    'Lungs',
+    'Pancreas',
+    'Corneas',
+    'Tissue',
+    'Bone Marrow',
+    'All Organs',
+  ];
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -50,7 +66,7 @@ const RegistrationForm = () => {
     const file = e.target.files?.[0] || null;
     setFormData((prev) => ({
       ...prev,
-      credentials: file,
+      medicalHistory: file,
     }));
   };
 
@@ -60,13 +76,13 @@ const RegistrationForm = () => {
     setError('');
 
     try {
-      const result = await register(formData, 'doctor');
+      const result = await register(formData, 'donor');
 
       if (result.success) {
         // Navigate to a success page or dashboard
         navigate('/', {
           state: {
-            message: 'Registration successful! Welcome to MediTrust.',
+            message: 'Registration successful! Thank you for becoming a donor.',
           },
         });
       } else {
@@ -83,7 +99,7 @@ const RegistrationForm = () => {
     <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
       <div className="text-center mb-8">
         <h2 className="text-2xl font-bold text-blue-600 mb-2">
-          Doctor Registration
+          Donor Registration
         </h2>
         <div className="w-16 h-1 bg-blue-500 mx-auto rounded-full"></div>
 
@@ -105,8 +121,8 @@ const RegistrationForm = () => {
 
       {/* Error Message */}
       {error && (
-        <div className="mb-6 p-3 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-sm text-red-600">{error}</p>
+        <div className="mb-6 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+          <p className="text-sm text-blue-600">{error}</p>
         </div>
       )}
 
@@ -169,19 +185,44 @@ const RegistrationForm = () => {
 
             <div>
               <label className="block text-sm font-medium text-blue-600 mb-2">
-                Specialization
+                Age
               </label>
               <div className="relative">
-                <Stethoscope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
-                  type="text"
-                  name="specialization"
-                  value={formData.specialization}
+                  type="number"
+                  name="age"
+                  value={formData.age}
                   onChange={handleInputChange}
                   className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="Enter your specialization"
+                  placeholder="Enter your age"
+                  min="18"
+                  max="100"
                   required
                 />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-blue-600 mb-2">
+                Blood Type
+              </label>
+              <div className="relative">
+                <Heart className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <select
+                  name="bloodType"
+                  value={formData.bloodType}
+                  onChange={handleInputChange}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all appearance-none bg-white"
+                  required
+                >
+                  <option value="">Select blood type</option>
+                  {bloodTypes.map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
           </>
@@ -191,17 +232,40 @@ const RegistrationForm = () => {
           <>
             <div>
               <label className="block text-sm font-medium text-blue-600 mb-2">
-                Medical License Number
+                Organs/Tissue to Donate
               </label>
               <div className="relative">
-                <FileText className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                  type="text"
-                  name="licenseNumber"
-                  value={formData.licenseNumber}
+                <Heart className="absolute left-3 top-3 text-gray-400 w-5 h-5" />
+                <select
+                  name="organsToDonate"
+                  value={formData.organsToDonate}
                   onChange={handleInputChange}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="Enter license number"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all appearance-none bg-white"
+                  required
+                >
+                  <option value="">Select organs to donate</option>
+                  {organOptions.map((organ) => (
+                    <option key={organ} value={organ}>
+                      {organ}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-blue-600 mb-2">
+                Address
+              </label>
+              <div className="relative">
+                <MapPin className="absolute left-3 top-3 text-gray-400 w-5 h-5" />
+                <textarea
+                  name="address"
+                  value={formData.address}
+                  onChange={handleInputChange}
+                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
+                  placeholder="Enter your full address"
+                  rows="3"
                   required
                 />
               </div>
@@ -209,17 +273,17 @@ const RegistrationForm = () => {
 
             <div>
               <label className="block text-sm font-medium text-blue-600 mb-2">
-                Affiliated Hospital
+                Emergency Contact
               </label>
               <div className="relative">
-                <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
-                  type="text"
-                  name="hospital"
-                  value={formData.hospital}
+                  type="tel"
+                  name="emergencyContact"
+                  value={formData.emergencyContact}
                   onChange={handleInputChange}
                   className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="Enter hospital name"
+                  placeholder="Emergency contact number"
                   required
                 />
               </div>
@@ -245,19 +309,20 @@ const RegistrationForm = () => {
 
             <div>
               <label className="block text-sm font-medium text-blue-600 mb-2">
-                Upload Credentials
+                Medical History (Optional)
               </label>
               <div className="relative">
                 <input
                   type="file"
-                  name="credentials"
+                  name="medicalHistory"
                   onChange={handleFileChange}
                   className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100"
+                  accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
                 />
                 <p className="text-xs text-gray-500 mt-1">
-                  {formData.credentials
-                    ? formData.credentials.name
-                    : 'No file chosen'}
+                  {formData.medicalHistory
+                    ? formData.medicalHistory.name
+                    : 'No file chosen (PDF, DOC, or image files)'}
                 </p>
               </div>
             </div>
@@ -265,14 +330,15 @@ const RegistrationForm = () => {
             <div className="flex items-start space-x-3">
               <input
                 type="checkbox"
-                name="agreeToShare"
-                checked={formData.agreeToShare}
+                name="agreeToTerms"
+                checked={formData.agreeToTerms}
                 onChange={handleInputChange}
                 className="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                 required
               />
               <label className="text-sm text-gray-600 leading-relaxed">
-                I agree to share my credentials for verification
+                I agree to the terms and conditions and understand the donation
+                process
               </label>
             </div>
           </>
@@ -304,7 +370,7 @@ const RegistrationForm = () => {
               disabled={isLoading}
               className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white py-3 px-6 rounded-lg font-semibold transition-colors shadow-lg hover:shadow-xl disabled:cursor-not-allowed"
             >
-              {isLoading ? 'Registering...' : 'Register'}
+              {isLoading ? 'Registering...' : 'Register as Donor'}
             </button>
           )}
         </div>

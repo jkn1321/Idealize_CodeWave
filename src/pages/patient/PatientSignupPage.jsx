@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../../components/shared/Header';
 import Footer from '../../components/shared/Footer';
-import PatientBackgroundLayout from '../../components/patient/PatientBackgroundLayout';
+import PatientBackgroundLayout from '../../components/shared/BackgroundLayout';
 import PatientMainContent from '../../components/patient/PatientMainContent';
 
 const PatientSignupPage = () => {

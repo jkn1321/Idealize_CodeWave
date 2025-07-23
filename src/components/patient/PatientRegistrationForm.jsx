@@ -90,15 +90,21 @@ const PatientRegistrationForm = () => {
           Patient Registration
         </h2>
         <div className="w-16 h-1 bg-blue-500 mx-auto rounded-full"></div>
-        
+
         {/* Progress Indicator */}
         <div className="flex justify-center mt-6 space-x-2">
-          <div className={`w-3 h-3 rounded-full ${currentStep === 1 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
-          <div className={`w-3 h-3 rounded-full ${currentStep === 2 ? 'bg-blue-600' : 'bg-gray-300'}`}></div>
+          <div
+            className={`w-3 h-3 rounded-full ${
+              currentStep === 1 ? 'bg-blue-600' : 'bg-gray-300'
+            }`}
+          ></div>
+          <div
+            className={`w-3 h-3 rounded-full ${
+              currentStep === 2 ? 'bg-blue-600' : 'bg-gray-300'
+            }`}
+          ></div>
         </div>
-        <p className="text-sm text-gray-600 mt-2">
-          Step {currentStep} of 2
-        </p>
+        <p className="text-sm text-gray-600 mt-2">Step {currentStep} of 2</p>
       </div>
 
       {/* Error Message */}
@@ -347,7 +353,7 @@ const PatientRegistrationForm = () => {
               Previous
             </button>
           )}
-          
+
           {currentStep === 1 ? (
             <button
               type="button"
