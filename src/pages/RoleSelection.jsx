@@ -8,6 +8,8 @@ import {
   Heart,
   HelpCircle,
 } from 'lucide-react';
+import Header from '../components/shared/Header';
+import Footer from '../components/shared/Footer';
 
 const RoleSelection = () => {
   const navigate = useNavigate();
@@ -66,7 +68,7 @@ const RoleSelection = () => {
       borderColor: 'border-orange-200 hover:border-orange-300',
       textColor: 'text-orange-600',
       bgColor: 'bg-orange-50 hover:bg-orange-100',
-      route: '/coming-soon/donor',
+      route: '/donor/signup',
     },
   ];
 
@@ -76,30 +78,7 @@ const RoleSelection = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <button
-              onClick={() => navigate('/')}
-              className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              <ArrowLeft className="h-5 w-5 mr-2" />
-              Back to Home
-            </button>
-
-            <Link to="/" className="flex items-center space-x-2">
-              <Heart className="h-8 w-8 text-primary-600" />
-              <div className="flex flex-col">
-                <h1 className="text-xl font-bold text-gray-900">MediTrust</h1>
-                <span className="text-xs text-gray-500">
-                  Making Healthcare Accessible
-                </span>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </div>
+      <Header />
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -191,6 +170,7 @@ const RoleSelection = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

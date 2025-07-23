@@ -2,9 +2,9 @@ import React from 'react';
 import Header from '../../components/shared/Header';
 import Footer from '../../components/shared/Footer';
 import BackgroundLayout from '../../components/shared/BackgroundLayout';
-import MainContent from '../../components/Doctor/MainContent';
+import MainContent from '../../components/donor/MainContent';
 
-function DoctorSignUpPage() {
+function DonerSignUpPage() {
   return (
     <BackgroundLayout>
       <Header />
@@ -14,4 +14,4 @@ function DoctorSignUpPage() {
   );
 }
 
-export default DoctorSignUpPage;
+export default DonerSignUpPage;
