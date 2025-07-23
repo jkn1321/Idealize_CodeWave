@@ -1,5 +1,5 @@
 import React from 'react';
-import './SystemSettingsPage.css';
+import '../styles/SystemSettingsPage.css';
 
 const SystemSettingsPage = () => {
   return (

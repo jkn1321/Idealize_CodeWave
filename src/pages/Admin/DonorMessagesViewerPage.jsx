@@ -1,5 +1,5 @@
 import React from 'react';
-import './DonorMessagesViewerPage.css';
+import '../styles/DonorMessagesViewerPage.css';
 
 const DonorMessagesViewerPage = () => {
   return (

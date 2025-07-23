@@ -1,5 +1,5 @@
 import React from 'react';
-import './ChannelRequestsViewerPage.css';
+import '../styles/ChannelRequestsViewerPage.css';
 
 const ChannelRequestsViewerPage = () => {
   return (

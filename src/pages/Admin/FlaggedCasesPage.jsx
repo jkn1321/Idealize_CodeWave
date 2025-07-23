@@ -1,5 +1,5 @@
 import React from 'react';
-import './FlaggedCasesPage.css';
+import '../styles/FlaggedCasesPage.css';
 
 const FlaggedCasesPage = () => {
   return (
