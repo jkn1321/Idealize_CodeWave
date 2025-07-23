@@ -4,25 +4,30 @@ import {
   User,
   Mail,
   Phone,
-  Stethoscope,
-  FileText,
-  Building,
+  Calendar,
+  MapPin,
+  Heart,
+  Shield,
   Lock,
+  UserPlus,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
-const RegistrationForm = () => {
+const PatientRegistrationForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
-    fullName: '',
+    firstName: '',
+    lastName: '',
     email: '',
     phone: '',
-    specialization: '',
-    licenseNumber: '',
-    hospital: '',
+    dateOfBirth: '',
+    gender: '',
+    address: '',
+    emergencyContact: '',
+    emergencyPhone: '',
+    insuranceProvider: '',
     password: '',
-    credentials: null,
-    agreeToShare: false,
+    agreeToTerms: false,
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -46,24 +51,23 @@ const RegistrationForm = () => {
     setCurrentStep(1);
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files?.[0] || null;
-    setFormData((prev) => ({
-      ...prev,
-      credentials: file,
-    }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
 
     try {
-      const result = await register(formData, 'doctor');
+      // Combine first and last name for the registration
+      const registrationData = {
+        ...formData,
+        fullName: `${formData.firstName} ${formData.lastName}`.trim(),
+        name: `${formData.firstName} ${formData.lastName}`.trim(),
+        phoneNumber: formData.phone,
+      };
+
+      const result = await register(registrationData, 'patient');
 
       if (result.success) {
-        // Navigate to a success page or dashboard
         navigate('/', {
           state: {
             message: 'Registration successful! Welcome to MediTrust.',
@@ -83,7 +87,7 @@ const RegistrationForm = () => {
     <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
       <div className="text-center mb-8">
         <h2 className="text-2xl font-bold text-blue-600 mb-2">
-          Doctor Registration
+          Patient Registration
         </h2>
         <div className="w-16 h-1 bg-blue-500 mx-auto rounded-full"></div>
         
@@ -107,21 +111,41 @@ const RegistrationForm = () => {
       <form onSubmit={handleSubmit} className="space-y-6">
         {currentStep === 1 && (
           <>
-            <div>
-              <label className="block text-sm font-medium text-blue-600 mb-2">
-                Full Name
-              </label>
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                  type="text"
-                  name="fullName"
-                  value={formData.fullName}
-                  onChange={handleInputChange}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="Enter your full name"
-                  required
-                />
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-blue-600 mb-2">
+                  First Name
+                </label>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <input
+                    type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    placeholder="First name"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-blue-600 mb-2">
+                  Last Name
+                </label>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <input
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    placeholder="Last name"
+                    required
+                  />
+                </div>
               </div>
             </div>
 
@@ -161,21 +185,43 @@ const RegistrationForm = () => {
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-blue-600 mb-2">
-                Specialization
-              </label>
-              <div className="relative">
-                <Stethoscope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                  type="text"
-                  name="specialization"
-                  value={formData.specialization}
-                  onChange={handleInputChange}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="Enter your specialization"
-                  required
-                />
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-blue-600 mb-2">
+                  Date of Birth
+                </label>
+                <div className="relative">
+                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <input
+                    type="date"
+                    name="dateOfBirth"
+                    value={formData.dateOfBirth}
+                    onChange={handleInputChange}
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-blue-600 mb-2">
+                  Gender
+                </label>
+                <div className="relative">
+                  <UserPlus className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <select
+                    name="gender"
+                    value={formData.gender}
+                    onChange={handleInputChange}
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    required
+                  >
+                    <option value="">Select gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
               </div>
             </div>
           </>
@@ -185,36 +231,73 @@ const RegistrationForm = () => {
           <>
             <div>
               <label className="block text-sm font-medium text-blue-600 mb-2">
-                Medical License Number
+                Address
               </label>
               <div className="relative">
-                <FileText className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
                   type="text"
-                  name="licenseNumber"
-                  value={formData.licenseNumber}
+                  name="address"
+                  value={formData.address}
                   onChange={handleInputChange}
                   className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="Enter license number"
+                  placeholder="Enter your address"
                   required
                 />
               </div>
             </div>
 
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-blue-600 mb-2">
+                  Emergency Contact
+                </label>
+                <div className="relative">
+                  <Heart className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <input
+                    type="text"
+                    name="emergencyContact"
+                    value={formData.emergencyContact}
+                    onChange={handleInputChange}
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    placeholder="Contact name"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-blue-600 mb-2">
+                  Emergency Phone
+                </label>
+                <div className="relative">
+                  <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <input
+                    type="tel"
+                    name="emergencyPhone"
+                    value={formData.emergencyPhone}
+                    onChange={handleInputChange}
+                    className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    placeholder="Emergency phone"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
             <div>
               <label className="block text-sm font-medium text-blue-600 mb-2">
-                Affiliated Hospital
+                Insurance Provider
               </label>
               <div className="relative">
-                <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <Shield className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
                   type="text"
-                  name="hospital"
-                  value={formData.hospital}
+                  name="insuranceProvider"
+                  value={formData.insuranceProvider}
                   onChange={handleInputChange}
                   className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="Enter hospital name"
-                  required
+                  placeholder="Enter insurance provider (optional)"
                 />
               </div>
             </div>
@@ -237,34 +320,17 @@ const RegistrationForm = () => {
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-blue-600 mb-2">
-                Upload Credentials
-              </label>
-              <div className="relative">
-                <input
-                  type="file"
-                  name="credentials"
-                  onChange={handleFileChange}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100"
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  {formData.credentials ? formData.credentials.name : 'No file chosen'}
-                </p>
-              </div>
-            </div>
-
             <div className="flex items-start space-x-3">
               <input
                 type="checkbox"
-                name="agreeToShare"
-                checked={formData.agreeToShare}
+                name="agreeToTerms"
+                checked={formData.agreeToTerms}
                 onChange={handleInputChange}
                 className="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                 required
               />
               <label className="text-sm text-gray-600 leading-relaxed">
-                I agree to share my credentials for verification
+                I agree to the Terms of Service and Privacy Policy
               </label>
             </div>
           </>
@@ -296,7 +362,7 @@ const RegistrationForm = () => {
               disabled={isLoading}
               className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white py-3 px-6 rounded-lg font-semibold transition-colors shadow-lg hover:shadow-xl disabled:cursor-not-allowed"
             >
-              {isLoading ? 'Registering...' : 'Register'}
+              {isLoading ? 'Creating Account...' : 'Create Account'}
             </button>
           )}
         </div>
@@ -317,4 +383,4 @@ const RegistrationForm = () => {
   );
 };
 
-export default RegistrationForm;
+export default PatientRegistrationForm;

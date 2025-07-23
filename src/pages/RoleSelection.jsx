@@ -1,149 +1,198 @@
-"use client"
+import { useNavigate, Link } from 'react-router-dom';
+import {
+  ArrowLeft,
+  User,
+  Stethoscope,
+  HandHeart,
+  Check,
+  Heart,
+  HelpCircle,
+} from 'lucide-react';
 
-const RoleSelection = ({ onRoleSelect, onBack }) => {
+const RoleSelection = () => {
+  const navigate = useNavigate();
+
   const roles = [
     {
-      id: "patient",
-      title: "Patient",
-      icon: "🏥",
-      description: "I need medical supplies or want to request healthcare assistance",
+      id: 'patient',
+      title: 'Patient',
+      icon: User,
+      description:
+        'I need medical supplies or want to request healthcare assistance',
       features: [
-        "Request medical supplies",
-        "Access healthcare providers",
-        "Track donation requests",
-        "Secure medical records",
+        'Request medical supplies',
+        'Access healthcare providers',
+        'Track donation requests',
+        'Secure medical records',
       ],
-      color: "#3B82F6",
+      color: 'blue',
+      bgGradient: 'from-blue-500 to-blue-600',
+      borderColor: 'border-blue-200 hover:border-blue-300',
+      textColor: 'text-blue-600',
+      bgColor: 'bg-blue-50 hover:bg-blue-100',
+      route: '/patient/signup',
     },
     {
-      id: "doctor",
-      title: "Healthcare Provider",
-      icon: "👨‍⚕️",
+      id: 'doctor',
+      title: 'Healthcare Provider',
+      icon: Stethoscope,
       description: "I'm a medical professional or healthcare facility",
       features: [
-        "Receive medical donations",
-        "Manage patient requests",
-        "Verify medical needs",
-        "Professional network access",
+        'Receive medical donations',
+        'Manage patient requests',
+        'Verify medical needs',
+        'Professional network access',
       ],
-      color: "#10B981",
+      color: 'green',
+      bgGradient: 'from-green-500 to-green-600',
+      borderColor: 'border-green-200 hover:border-green-300',
+      textColor: 'text-green-600',
+      bgColor: 'bg-green-50 hover:bg-green-100',
+      route: '/doctor/signup',
     },
     {
-      id: "donor",
-      title: "Donor",
-      icon: "🤝",
-      description: "I want to donate medical supplies or funds",
+      id: 'donor',
+      title: 'Donor',
+      icon: HandHeart,
+      description: 'I want to donate medical supplies or funds',
       features: [
-        "Make medical donations",
-        "Track donation impact",
-        "Connect with healthcare providers",
-        "Tax-deductible contributions",
+        'Make medical donations',
+        'Track donation impact',
+        'Connect with healthcare providers',
+        'Tax-deductible contributions',
       ],
-      color: "#F59E0B",
+      color: 'orange',
+      bgGradient: 'from-amber-500 to-orange-600',
+      borderColor: 'border-orange-200 hover:border-orange-300',
+      textColor: 'text-orange-600',
+      bgColor: 'bg-orange-50 hover:bg-orange-100',
+      route: '/coming-soon/donor',
     },
-  ]
+  ];
 
-  const handleRoleClick = (roleId) => {
-    console.log("Role selected:", roleId)
-    if (onRoleSelect) {
-      onRoleSelect(roleId)
-    }
-  }
-
-  const handleBackClick = () => {
-    console.log("Back button clicked")
-    if (onBack) {
-      onBack()
-    }
-  }
+  const handleRoleClick = (role) => {
+    navigate(role.route);
+  };
 
   return (
-    <div className="role-selection-page">
-      <div className="role-selection-container">
-        <div className="role-header">
-          <button className="back-button" onClick={handleBackClick}>
-            ← Back to Home
-          </button>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      {/* Header */}
+      <div className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex items-center justify-between">
+            <button
+              onClick={() => navigate('/')}
+              className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Back to Home
+            </button>
 
-          <div className="header-content">
-            <div className="brand-section">
-              <h1>MediTrust</h1>
-              <p>Making Healthcare Accessible</p>
-            </div>
-
-            <div className="selection-intro">
-              <h2>Join Our Healthcare Community</h2>
-              <p>Choose your role to get started with MediTrust and help us make healthcare accessible for everyone.</p>
-            </div>
+            <Link to="/" className="flex items-center space-x-2">
+              <Heart className="h-8 w-8 text-primary-600" />
+              <div className="flex flex-col">
+                <h1 className="text-xl font-bold text-gray-900">MediTrust</h1>
+                <span className="text-xs text-gray-500">
+                  Making Healthcare Accessible
+                </span>
+              </div>
+            </Link>
           </div>
         </div>
+      </div>
 
-        <div className="roles-grid">
-          {roles.map((role) => (
-            <div
-              key={role.id}
-              className="role-card"
-              onClick={() => handleRoleClick(role.id)}
-              style={{ "--role-color": role.color }}
-            >
-              <div className="role-icon" style={{ backgroundColor: `${role.color}20` }}>
-                <span style={{ color: role.color }}>{role.icon}</span>
-              </div>
-
-              <div className="role-content">
-                <h3 style={{ color: role.color }}>{role.title}</h3>
-                <p className="role-description">{role.description}</p>
-
-                <ul className="role-features">
-                  {role.features.map((feature, index) => (
-                    <li key={index}>
-                      <span className="feature-check" style={{ color: role.color }}>
-                        ✓
-                      </span>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-
-                <button
-                  className="role-select-btn"
-                  style={{
-                    backgroundColor: role.color,
-                    borderColor: role.color,
-                  }}
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    handleRoleClick(role.id)
-                  }}
-                >
-                  Sign Up as {role.title}
-                </button>
-              </div>
-            </div>
-          ))}
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Introduction */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+            Join Our Healthcare Community
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Choose your role to get started with MediTrust and help us make
+            healthcare accessible for everyone.
+          </p>
         </div>
 
-        <div className="role-footer">
-          <p>
-            Already have an account?
-            <a href="#login" className="login-link">
-              {" "}
+        {/* Roles Grid */}
+        <div className="grid md:grid-cols-3 gap-8 mb-16">
+          {roles.map((role) => {
+            const IconComponent = role.icon;
+            return (
+              <div
+                key={role.id}
+                className={`bg-white rounded-2xl border-2 ${role.borderColor} shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group`}
+                onClick={() => handleRoleClick(role)}
+              >
+                <div className="p-8">
+                  {/* Icon */}
+                  <div
+                    className={`w-16 h-16 ${role.bgColor} rounded-full flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform`}
+                  >
+                    <IconComponent className={`h-8 w-8 ${role.textColor}`} />
+                  </div>
+
+                  {/* Content */}
+                  <div className="text-center mb-6">
+                    <h3 className={`text-2xl font-bold ${role.textColor} mb-3`}>
+                      {role.title}
+                    </h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      {role.description}
+                    </p>
+                  </div>
+
+                  {/* Features */}
+                  <ul className="space-y-3 mb-8">
+                    {role.features.map((feature, index) => (
+                      <li
+                        key={index}
+                        className="flex items-center text-sm text-gray-600"
+                      >
+                        <Check
+                          className={`h-4 w-4 ${role.textColor} mr-3 flex-shrink-0`}
+                        />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* CTA Button */}
+                  <button
+                    className={`w-full bg-gradient-to-r ${role.bgGradient} text-white font-semibold py-3 px-6 rounded-lg hover:opacity-90 transition-opacity focus:ring-4 focus:ring-offset-2 focus:ring-blue-500`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRoleClick(role);
+                    }}
+                  >
+                    Sign Up as {role.title}
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Footer */}
+        <div className="text-center space-y-4">
+          <p className="text-gray-600">
+            Already have an account?{' '}
+            <button className="text-primary-600 hover:text-primary-700 font-medium transition-colors">
               Sign in here
-            </a>
+            </button>
           </p>
 
-          <div className="help-section">
-            <p>
-              Need help choosing?{" "}
-              <a href="#contact" className="help-link">
-                Contact our support team
-              </a>
-            </p>
+          <div className="flex items-center justify-center text-gray-500">
+            <HelpCircle className="h-4 w-4 mr-2" />
+            <span>Need help choosing?</span>
+            <button className="ml-1 text-primary-600 hover:text-primary-700 font-medium transition-colors">
+              Contact our support team
+            </button>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default RoleSelection
+export default RoleSelection;
