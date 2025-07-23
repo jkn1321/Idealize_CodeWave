@@ -63,8 +63,8 @@ const RegistrationForm = () => {
       const result = await register(formData, 'doctor');
 
       if (result.success) {
-        // Navigate to a success page or dashboard
-        navigate('/', {
+        // Navigate to doctor dashboard
+        navigate('/login', {
           state: {
             message: 'Registration successful! Welcome to MediTrust.',
           },
