@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Home,
-  Upload,
-  User,
-  LogOut,
   Clock,
   CheckCircle,
   XCircle,
@@ -14,11 +10,13 @@ import {
   Eye,
   MessageSquare,
   Activity,
+  Users,
+  TrendingUp,
 } from 'lucide-react';
 import MedicalDocUpload from './medicalDocUpload';
 import StatusTracking from './statusTracking';
 import ChannelDoctor from './channel';
-import Header from '../../components/shared/Header';
+import PatientSidebar from '../../components/patient/PatientSidebar';
 
 const PatientDashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -93,11 +91,19 @@ const PatientDashboard = () => {
     },
   ];
 
-  const sidebarItems = [
-    { id: 'dashboard', name: 'Dashboard', icon: Home },
-    { id: 'upload', name: 'Upload', icon: Upload },
-    { id: 'channel', name: 'Channel a Doctor', icon: User },
-  ];
+  // Summary statistics
+  const totalGoal = cases.reduce(
+    (sum, caseItem) => sum + caseItem.goalAmount,
+    0
+  );
+  const totalRaised = cases.reduce(
+    (sum, caseItem) => sum + caseItem.raisedAmount,
+    0
+  );
+  const totalDonors = 67; // Sample data
+  const averageProgress = Math.round(
+    cases.reduce((sum, caseItem) => sum + caseItem.progress, 0) / cases.length
+  );
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -135,9 +141,9 @@ const PatientDashboard = () => {
               <div
                 className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
                   step.status === 'completed'
-                    ? 'bg-green-500 text-white'
+                    ? 'bg-green-600 text-white'
                     : step.status === 'current'
-                    ? 'bg-blue-500 text-white'
+                    ? 'bg-blue-600 text-white'
                     : 'bg-gray-300 text-gray-500'
                 }`}
               >
@@ -164,7 +170,7 @@ const PatientDashboard = () => {
               {index < timeline.length - 1 && (
                 <div
                   className={`absolute left-4 w-px h-8 mt-8 ${
-                    step.status === 'completed' ? 'bg-green-500' : 'bg-gray-300'
+                    step.status === 'completed' ? 'bg-green-600' : 'bg-gray-300'
                   }`}
                   style={{ top: `${index * 64 + 32}px` }}
                 />
@@ -177,37 +183,13 @@ const PatientDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100">
-      <Header />
+    <div className="min-h-screen bg-gray-50">
       <div className="flex">
         {/* Sidebar */}
-        <div className="w-64 bg-blue-500 text-white fixed h-full">
-          <div className="p-6">
-           
-            <nav className="space-y-2">
-              {sidebarItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => setActiveTab(item.id)}
-                    className={`w-full flex items-center px-4 py-3 rounded-lg transition-colors ${
-                      activeTab === item.id
-                        ? 'bg-white text-blue-500'
-                        : 'text-slate-300 hover:bg-blue-700 hover:text-white'
-                    }`}
-                  >
-                    <Icon className="w-5 h-5 mr-3" />
-                    {item.name}
-                  </button>
-                );
-              })}
-            </nav>
-          </div>
-        </div>
+        <PatientSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
 
         {/* Main Content */}
-        <div className="flex-1 ml-64 p-8">
+        <div className="flex-1 ml-64">
           {activeTab === 'upload' ? (
             <MedicalDocUpload
               onBack={() => setActiveTab('dashboard')}
@@ -221,7 +203,7 @@ const PatientDashboard = () => {
           ) : activeTab === 'channel' ? (
             <ChannelDoctor onBack={() => setActiveTab('dashboard')} />
           ) : (
-            <div className="max-w-7xl mx-auto">
+            <div className="p-8">
               {/* Header */}
               <div className="mb-8">
                 <h1 className="text-3xl font-bold text-gray-900 mb-2">
@@ -236,10 +218,10 @@ const PatientDashboard = () => {
               {activeTab === 'dashboard' && (
                 <>
                   {/* Quick Stats */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div className="bg-white rounded-lg shadow-sm p-6">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
                       <div className="flex items-center">
-                        <div className="p-2 bg-blue-100 rounded-lg">
+                        <div className="p-3 bg-blue-100 rounded-lg">
                           <Target className="w-6 h-6 text-blue-600" />
                         </div>
                         <div className="ml-4">
@@ -247,14 +229,14 @@ const PatientDashboard = () => {
                             Total Goal
                           </p>
                           <p className="text-2xl font-bold text-gray-900">
-                            $125,000
+                            ${totalGoal.toLocaleString()}
                           </p>
                         </div>
                       </div>
                     </div>
-                    <div className="bg-white rounded-lg shadow-sm p-6">
+                    <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
                       <div className="flex items-center">
-                        <div className="p-2 bg-green-100 rounded-lg">
+                        <div className="p-3 bg-green-100 rounded-lg">
                           <DollarSign className="w-6 h-6 text-green-600" />
                         </div>
                         <div className="ml-4">
@@ -262,22 +244,37 @@ const PatientDashboard = () => {
                             Total Raised
                           </p>
                           <p className="text-2xl font-bold text-gray-900">
-                            $51,250
+                            ${totalRaised.toLocaleString()}
                           </p>
                         </div>
                       </div>
                     </div>
-                    <div className="bg-white rounded-lg shadow-sm p-6">
+                    <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
                       <div className="flex items-center">
-                        <div className="p-2 bg-purple-100 rounded-lg">
-                          <MessageSquare className="w-6 h-6 text-purple-600" />
+                        <div className="p-3 bg-purple-100 rounded-lg">
+                          <Users className="w-6 h-6 text-purple-600" />
                         </div>
                         <div className="ml-4">
                           <p className="text-sm font-medium text-gray-600">
-                            Messages
+                            Total Donors
                           </p>
                           <p className="text-2xl font-bold text-gray-900">
-                            {donorMessages.filter((m) => !m.read).length}
+                            {totalDonors}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+                      <div className="flex items-center">
+                        <div className="p-3 bg-orange-100 rounded-lg">
+                          <TrendingUp className="w-6 h-6 text-orange-600" />
+                        </div>
+                        <div className="ml-4">
+                          <p className="text-sm font-medium text-gray-600">
+                            Avg Progress
+                          </p>
+                          <p className="text-2xl font-bold text-gray-900">
+                            {averageProgress}%
                           </p>
                         </div>
                       </div>
@@ -319,9 +316,9 @@ const PatientDashboard = () => {
                               <span>Progress</span>
                               <span>{caseItem.progress}%</span>
                             </div>
-                            <div className="w-full bg-gray-200 rounded-full h-2">
+                            <div className="w-full bg-gray-200 rounded-full h-3">
                               <div
-                                className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+                                className="bg-blue-600 h-3 rounded-full transition-all duration-300"
                                 style={{ width: `${caseItem.progress}%` }}
                               ></div>
                             </div>
@@ -345,12 +342,15 @@ const PatientDashboard = () => {
 
                           {/* Action Buttons */}
                           <div className="flex gap-2">
-                            <button className="flex-1 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center">
+                            <button
+                              onClick={() => handleViewStatus(caseItem.id)}
+                              className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center text-sm font-medium"
+                            >
                               <Eye className="w-4 h-4 mr-2" />
                               View Details
                             </button>
                             {caseItem.status === 'verified' && (
-                              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors flex items-center">
+                              <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center text-sm font-medium">
                                 <Plus className="w-4 h-4 mr-2" />
                                 Post Update
                               </button>
@@ -423,17 +423,12 @@ const PatientDashboard = () => {
 
                   {/* Post-Treatment Update Button */}
                   <div className="mt-8 text-center">
-                    <button className="bg-blue-500 text-white px-8 py-3 rounded-lg hover:bg-blue-600 transition-colors font-medium flex items-center mx-auto">
+                    <button className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center mx-auto">
                       <Plus className="w-5 h-5 mr-2" />
                       Add Post-Treatment Update
                     </button>
                   </div>
                 </>
-              )}
-
-              {/* Other Tab Contents */}
-              {activeTab === 'channel' && (
-                <ChannelDoctor onBack={() => setActiveTab('dashboard')} />
               )}
             </div>
           )}

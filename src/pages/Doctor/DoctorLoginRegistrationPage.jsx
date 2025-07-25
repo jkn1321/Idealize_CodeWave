@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './DoctorLoginRegistrationPage.css';
+import { Stethoscope, Mail, Lock, User } from 'lucide-react';
 
 const DoctorLoginRegistrationPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -26,8 +26,12 @@ const DoctorLoginRegistrationPage = () => {
           <form>
             <input type="email" placeholder="Email" required />
             <input type="password" placeholder="Password" required />
-            <button type="submit" className="primary-button">Login</button>
-            <a href="#" className="reset-password">Forgot Password?</a>
+            <button type="submit" className="primary-button">
+              Login
+            </button>
+            <a href="#" className="reset-password">
+              Forgot Password?
+            </a>
           </form>
         </div>
       ) : (
@@ -50,7 +54,9 @@ const DoctorLoginRegistrationPage = () => {
             <label>
               <input type="checkbox" required /> Agree to Terms
             </label>
-            <button type="submit" className="primary-button">Register</button>
+            <button type="submit" className="primary-button">
+              Register
+            </button>
           </form>
         </div>
       )}
