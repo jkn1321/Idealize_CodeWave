@@ -15,7 +15,7 @@ import {
   MessageSquare,
   Activity,
 } from 'lucide-react';
-import Header from '../../components/shared/Header';
+import DoctorSidebar from '../../components/Doctor/DoctorSidebar';
 
 const DoctorDashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -89,14 +89,6 @@ const DoctorDashboard = () => {
     },
   ];
 
-  const sidebarItems = [
-    { id: 'dashboard', name: 'Dashboard', icon: Home },
-    { id: 'requests', name: 'Medical Requests', icon: FileText },
-    { id: 'patients', name: 'My Patients', icon: Users },
-    { id: 'profile', name: 'Profile', icon: User },
-    { id: 'logout', name: 'Logout', icon: LogOut },
-  ];
-
   const getStatusColor = (status) => {
     switch (status) {
       case 'pending':
@@ -141,44 +133,20 @@ const DoctorDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100">
-      <Header />
-      <div className="flex">
-        {/* Sidebar */}
-        <div className="w-64 bg-slate-500 text-white fixed h-full">
-          <div className="p-6">
-            <nav className="space-y-2">
-              {sidebarItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => setActiveTab(item.id)}
-                    className={`w-full flex items-center px-4 py-3 rounded-lg transition-colors ${
-                      activeTab === item.id
-                        ? 'bg-white text-blue-500'
-                        : 'text-blue-500 hover:bg-blue-700 hover:text-white'
-                    }`}
-                  >
-                    <Icon className="w-5 h-5 mr-3" />
-                    {item.name}
-                  </button>
-                );
-              })}
-            </nav>
-          </div>
-        </div>
+    <div className="flex min-h-screen bg-gray-50">
+      <DoctorSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        {/* Main Content */}
-        <div className="flex-1 ml-64 p-8">
+      <div className="flex-1 ml-64">
+        <div className="p-8">
           <div className="max-w-7xl mx-auto">
             {/* Header */}
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="text-3xl font-bold text-gray-800 mb-2 flex items-center gap-3">
+                <Stethoscope className="w-8 h-8 text-green-600" />
                 Doctor Dashboard
               </h1>
               <p className="text-gray-600">
-                Manage medical requests and patient care
+                Review medical cases and manage patient requests
               </p>
             </div>
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './DonorLoginSignupPage.css';
+import { Heart, Mail, Lock, User } from 'lucide-react';
 
 const DonorLoginSignupPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -26,8 +26,12 @@ const DonorLoginSignupPage = () => {
           <form>
             <input type="email" placeholder="Email or Phone" required />
             <input type="password" placeholder="Password" required />
-            <button type="submit" className="primary-button">Login</button>
-            <a href="#" className="reset-password">Forgot Password?</a>
+            <button type="submit" className="primary-button">
+              Login
+            </button>
+            <a href="#" className="reset-password">
+              Forgot Password?
+            </a>
           </form>
         </div>
       ) : (
@@ -41,7 +45,9 @@ const DonorLoginSignupPage = () => {
             <label>
               <input type="checkbox" /> Donate Anonymously
             </label>
-            <button type="submit" className="primary-button">Create Account</button>
+            <button type="submit" className="primary-button">
+              Create Account
+            </button>
           </form>
         </div>
       )}
